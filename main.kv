@@ -1,0 +1,119 @@
+#:kivy 1.11.1
+
+
+<Root>: 
+    size: 1360, 600
+    BoxLayout:
+        orientation: 'horizontal'
+        BoxLayout:
+            orientation: 'vertical'
+            Image:
+                source: 'bigSample.png'
+                size: self.size
+            Splitter:
+                sizable_from:'top'
+                Button:
+                    text:'classes'
+        Splitter:
+            sizable_from: 'left'
+
+            BoxLayout:
+                canvas:
+                    Color: 
+                        rgb: 1,0,0
+                orientation: 'vertical'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:'Images path:'
+                    TextInput:
+                        text: 'enter path here.'
+                        multiline: False
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:'Output path:'
+                    TextInput:
+                        text: 'enter path here.'
+                        multiline: False
+                Label: 
+                    text:'Problem:'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    CheckBox:
+                        group: 'problem'
+                    Label:
+                        text:'Classification'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    CheckBox:
+                        group: 'problem'
+                    Label:
+                        text:'Detection'
+
+                Label:
+                    text: 'output format:'
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    CheckBox:
+                        active: True
+                        group: 'format'
+                    Label:
+                        text:'png'
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    CheckBox:
+                        active: True
+                        group: 'format'
+                    Label:
+                        text:'jpg'
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    CheckBox:
+                        active: True
+                        group: 'format'
+                    Label:
+                        text:'gif'
+                Label:
+                    text: 'Reshape?'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    CheckBox:
+                        group: 'reshape'   
+                    Label:
+                        text:'No'
+      
+                BoxLayout:
+
+                    orientation: 'horizontal'
+                    CheckBox:
+                        group: 'reshape'       
+                    Label:
+                        text:'Yes'
+
+                    TextInput:
+                        text: 'x'
+                        multiline: False
+                        size_hint: None, None
+                        height: 50
+                        padding:10
+
+                    Label: 
+                        text: 'x'
+                    TextInput:
+                        text: 'y'
+                        multiline: False
+                        size_hint: None, None
+                        height: 50
+                        padding:10
+                Label:
+                    text: 'Label output Format:'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:'hdf5'
+                    CheckBox:
+                        group: 'Label'                     
