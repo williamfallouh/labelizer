@@ -10,6 +10,10 @@ from kivy.uix.checkbox import CheckBox
 from kivy.uix.label import Label
 import kivy
 
+from subprocess import Popen, PIPE
+from kivy.uix.screenmanager import Screen
+
+
 
 
 
@@ -38,7 +42,7 @@ BoxLayout:
         orientation: 'vertical'
         canvas:
             Color: 
-                rgba: 1,1,1,0.5
+                rgba: 1,1,1,0.3
             Rectangle:
                 size: self.size
         Image:
@@ -341,13 +345,21 @@ class MainApp(App):
     def build(self):
 #        return Root()
         return root
-
     def addClassCallback(instance):
-        print('hah, nice try. No work no class.')
-        box = BoxLayout(orientation= 'horizontal')
-        root.ids.classesGrid.add_widget(box)
-        box.add_widget(CheckBox(group= 'class', size_hint_x = None))  
-        box.add_widget(Label(text = 'class n+1', size_hint_x = None))
+
+        process = Popen(['python3', 'classAdd.py'],stdin = PIPE, stdout=PIPE, stderr=PIPE)
+
+        output, err = process.communicate(b"input data that is passed to subprocess' stdin")
+        print(output)
+        if output==b"save\n":
+            box = BoxLayout(orientation= 'horizontal')
+            root.ids.classesGrid.add_widget(box)
+            box.add_widget(CheckBox(group= 'class', size_hint_x = None))  
+            box.add_widget(Label(text = 'class n+1', size_hint_x = None))
+
+
+ 
+
 
 if __name__ == '__main__':
     MainApp().run()
