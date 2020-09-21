@@ -8,6 +8,8 @@ from kivy.utils import get_color_from_hex
 from kivy.config import Config
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.label import Label
+from kivy.uix.button import Button
+
 import kivy
 
 from subprocess import Popen, PIPE
@@ -87,7 +89,8 @@ BoxLayout:
                                 size_hint_x: None
                             Label:
                                 size_hint_x: None
-                                text:'Person'                         
+                                text:'Person'    
+
                         BoxLayout:
                             orientation: 'horizontal'
                             CheckBox:
@@ -96,10 +99,12 @@ BoxLayout:
                             Label:
                                 size_hint_x: None
                                 text:'Truck'
-
-    
-
-
+                            Button:
+                                size : (50,50)
+                                pos_hint: {'x':.23, 'y':.23}
+                                size_hint:(None, None)
+                                background_normal: ''
+                                padding: (10,10)  
 
     Splitter:
         sizable_from: 'left'
@@ -351,12 +356,17 @@ class MainApp(App):
 
         output, err = process.communicate(b"input data that is passed to subprocess' stdin")
         print(output)
-        if output==b"save\n":
+        if output!=b"":
+            output =(output).decode("utf-8").split(";")
+            print(output)
+            name = output[0]
+            color = get_color_from_hex(output[1])
             box = BoxLayout(orientation= 'horizontal')
             root.ids.classesGrid.add_widget(box)
             box.add_widget(CheckBox(group= 'class', size_hint_x = None))  
-            box.add_widget(Label(text = 'class n+1', size_hint_x = None))
-
+            box.add_widget(Label(text = name, size_hint_x = None))
+            box.add_widget(Button(size = (50,50), size_hint_x = None, size_hint_y = None,pos_hint = {'x':.23, 'y':.23}, background_normal= '',  background_color = color ))
+            #box.add_widget(Button(size = (40,40), size_hint_x = None, Color = color ))
 
  
 
