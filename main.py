@@ -7,6 +7,7 @@ from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
 from kivy.config import Config
 from kivy.uix.checkbox import CheckBox
+from kivy.uix.label import Label
 import kivy
 
 
@@ -33,7 +34,7 @@ root = Builder.load_string(
 '''
 BoxLayout:
     orientation: 'horizontal'
-    BoxLayout:
+    BoxLayout:	
         orientation: 'vertical'
         canvas:
             Color: 
@@ -43,16 +44,128 @@ BoxLayout:
         Image:
             source: 'bigSample.png'
             size: self.size
+
         Splitter:
             sizable_from:'top'
             max_size: 2000
-            Button:
-                text:'classes'
+            BoxLayout:
+                orientation: 'horizontal'
+
+                Button:
+                    text:'+ add class'
+                    size_hint_x: None
+                    on_press: app.addClassCallback()
+
+                GridLayout:
+                    id:classesGrid
+                    rows: 4
+                    cols: None
+                    row_force_default: True
+                    row_default_height: 100
+                    col_force_default: True
+                    col_default_width: 400
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        CheckBox:
+                            group: 'class'
+                            size_hint_x: None
+                        Label:
+                            size_hint_x: None
+                            text:'Car'
+                        
+                            size: self.texture_size
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        CheckBox:
+                            group: 'class'
+                            size_hint_x: None
+                        Label:
+                            size_hint_x: None
+                            text:'Person'
+                        
+                            size: self.texture_size       
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        CheckBox:
+                            group: 'class'
+                            size_hint_x: None
+                        Label:
+                            size_hint_x: None
+                            text:'Truck'
+                        
+                            size: self.texture_size
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        CheckBox:
+                            group: 'class'
+                            size_hint_x: None
+                        Label:
+                            size_hint_x: None
+                            text:'class 4'
+                        
+                            size: self.texture_size       
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        CheckBox:
+                            group: 'class'
+                            size_hint_x: None
+                        Label:
+                            size_hint_x: None
+                            text:'class 5'
+                        
+                            size: self.texture_size
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        CheckBox:
+                            group: 'class'
+                            size_hint_x: None
+                        Label:
+                            size_hint_x: None
+                            text:'class 6'
+                        
+                            size: self.texture_size
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        CheckBox:
+                            group: 'class'
+                            size_hint_x: None
+                        Label:
+                            size_hint_x: None
+                            text:'class 7'
+                        
+                            size: self.texture_size
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        CheckBox:
+                            group: 'class'
+                            size_hint_x: None
+                        Label:
+                            size_hint_x: None
+                            text:'class 8'
+                        
+                            size: self.texture_size
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        CheckBox:
+                            group: 'class'
+                            size_hint_x: None
+                        Label:
+                            size_hint_x: None
+                            text:'class 9'
+                        
+                            size: self.texture_size
+
+
+
+
+
+
     Splitter:
         sizable_from: 'left'
         max_size: 4000
-
+        _parent_proportion: .5
         BoxLayout:
+
             canvas:
                 Color: 
                     rgba: 1,1,1,0.2
@@ -291,5 +404,14 @@ class MainApp(App):
     def build(self):
 #        return Root()
         return root
+
+    def addClassCallback(instance):
+        print('hah, nice try. No work no class.')
+        box = BoxLayout(orientation= 'horizontal')
+        root.ids.classesGrid.add_widget(box)
+        box.add_widget(CheckBox(group= 'class', size_hint_x = None))  
+        box.add_widget(Label(text = 'class n+1', size_hint_x = None))
+
 if __name__ == '__main__':
     MainApp().run()
+
