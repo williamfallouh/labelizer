@@ -47,7 +47,7 @@ BoxLayout:
 
         Splitter:
             sizable_from:'top'
-            max_size: 2000
+            max_size: 1000
             BoxLayout:
                 orientation: 'horizontal'
 
@@ -55,108 +55,45 @@ BoxLayout:
                     text:'+ add class'
                     size_hint_x: None
                     on_press: app.addClassCallback()
+                ScrollView:
+                    do_scroll_y: False
+                    GridLayout:
+                        width: self.minimum_width
+                        size_hint: None, None
+                        id:classesGrid
+                        rows: 4
+                        cols: None
+                        row_force_default: True
+                        row_default_height: 100
+                        col_force_default: True
+                        col_default_width: 400
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            CheckBox:
+                                group: 'class'
+                                size_hint_x: None
+                            Label:
+                                size_hint_x: None
+                                text:'Car'
+             
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            CheckBox:
+                                group: 'class'
+                                size_hint_x: None
+                            Label:
+                                size_hint_x: None
+                                text:'Person'                         
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            CheckBox:
+                                group: 'class'
+                                size_hint_x: None
+                            Label:
+                                size_hint_x: None
+                                text:'Truck'
 
-                GridLayout:
-                    id:classesGrid
-                    rows: 4
-                    cols: None
-                    row_force_default: True
-                    row_default_height: 100
-                    col_force_default: True
-                    col_default_width: 400
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        CheckBox:
-                            group: 'class'
-                            size_hint_x: None
-                        Label:
-                            size_hint_x: None
-                            text:'Car'
-                        
-                            size: self.texture_size
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        CheckBox:
-                            group: 'class'
-                            size_hint_x: None
-                        Label:
-                            size_hint_x: None
-                            text:'Person'
-                        
-                            size: self.texture_size       
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        CheckBox:
-                            group: 'class'
-                            size_hint_x: None
-                        Label:
-                            size_hint_x: None
-                            text:'Truck'
-                        
-                            size: self.texture_size
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        CheckBox:
-                            group: 'class'
-                            size_hint_x: None
-                        Label:
-                            size_hint_x: None
-                            text:'class 4'
-                        
-                            size: self.texture_size       
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        CheckBox:
-                            group: 'class'
-                            size_hint_x: None
-                        Label:
-                            size_hint_x: None
-                            text:'class 5'
-                        
-                            size: self.texture_size
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        CheckBox:
-                            group: 'class'
-                            size_hint_x: None
-                        Label:
-                            size_hint_x: None
-                            text:'class 6'
-                        
-                            size: self.texture_size
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        CheckBox:
-                            group: 'class'
-                            size_hint_x: None
-                        Label:
-                            size_hint_x: None
-                            text:'class 7'
-                        
-                            size: self.texture_size
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        CheckBox:
-                            group: 'class'
-                            size_hint_x: None
-                        Label:
-                            size_hint_x: None
-                            text:'class 8'
-                        
-                            size: self.texture_size
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        CheckBox:
-                            group: 'class'
-                            size_hint_x: None
-                        Label:
-                            size_hint_x: None
-                            text:'class 9'
-                        
-                            size: self.texture_size
-
-
-
+    
 
 
 
