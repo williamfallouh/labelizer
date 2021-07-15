@@ -1,120 +1,310 @@
-#:kivy 1.11.1
+    #:kivy 1.11.1
+BoxLayout:
+    orientation: 'vertical'
+    ActionBar:
 
+        ActionView:
+            ActionOverflow
+            ActionPrevious
+            ActionButton:
+                text:'File'
+            ActionButton:
+                text: 'Exit'
 
-<Root>: 
-    size: 1360, 600
     BoxLayout:
         orientation: 'horizontal'
-        BoxLayout:
+        BoxLayout:  
             orientation: 'vertical'
+            canvas:
+                Color: 
+                    rgba: 1,1,1,0.3
+                Rectangle:
+                    size: self.size
             Image:
                 source: 'bigSample.png'
                 size: self.size
+
             Splitter:
                 sizable_from:'top'
-                Button:
-                    text:'classes'
+                max_size: 1000
+                BoxLayout:
+                    orientation: 'horizontal'
+
+                    Button:
+                        text:'+ add class'
+                        size_hint_x: None
+                        on_press: app.addClassCallback()
+
+                    ScrollView:
+                        do_scroll_y: False
+                        GridLayout:
+                            width: self.minimum_width
+                            size_hint: None, None
+                            id:classesGrid
+                            rows: 4
+                            cols: None
+                            row_force_default: True
+                            row_default_height: 100
+                            col_force_default: True
+                            col_default_width: 400
+
+
         Splitter:
             sizable_from: 'left'
-            
-
+            max_size: 4000
+            _parent_proportion: .5
             BoxLayout:
+
                 canvas:
                     Color: 
-                        rgb: 1,0,0
+                        rgba: 1,1,1,0.2
+                    Rectangle:
+                        size: self.size
+                        pos:self.pos    
                 orientation: 'vertical'
-                BoxLayout:
-                    orientation: 'horizontal'
-                    Label:
-                        text:'Images path:'
-                    TextInput:
-                        text: 'enter path here.'
-                        multiline: False
-                BoxLayout:
-                    orientation: 'horizontal'
-                    Label:
-                        text:'Output path:'
-                    TextInput:
-                        text: 'enter path here.'
-                        multiline: False
                 Label: 
-                    text:'Problem:'
+                    text:'   Dataset:'
+                    bold:'True'
+                    font_size: 25
+                    size_hint_x: None
+                    size: self.texture_size 
+                    size_hint_y: None
+                    height:100
+                    padding: 30,30    
                 BoxLayout:
+                    size_hint_y: None
+                    height:50
                     orientation: 'horizontal'
-                    CheckBox:
+                    Label:
+                        text:'   Images path:   '
+                        size_hint_x: None
+                        size: self.texture_size
+                    TextInput:
+                        text: 'enter path here.'
+                        size_hint_y: None
+                        multiline: False
+                        height:40
+                        id:inputPathTI  
+                        on_text_validate: app.setInputPath()
+                    Button:
+                        text: 'Parcourir'
+                        size_hint_x: None
+                        size_hint_y: None
+                        multiline: False
+                        height:39    
+                        width:100                 
+                BoxLayout: 
+                    size_hint_y: None
+                    height:50     
+                    orientation: 'horizontal'
+                    Label:
+                        text:'   Output path:   '
+                        size_hint_x: None
+                        size: self.texture_size
+                    TextInput:
+                        text: 'enter path here.'
+                        size_hint_y: None
+                        multiline: False
+                        height:40
+                        id: outputPathTI
+                        on_text_validate: app.setOutputPath()
+                    Button:
+                        text: 'Parcourir'
+                        size_hint_x: None
+                        size_hint_y: None
+                        multiline: False
+                        height:39    
+                        width:100    
+                Label: 
+                    text:'   Problem:'
+                    bold:'True'
+                    font_size: 25
+                    size_hint_x: None
+                    size: self.texture_size     
+                    size_hint_y: None
+                    height:100
+                    padding:30,30  
+
+                BoxLayout:
+                    size_hint_y: None
+                    height:50
+                    orientation: 'horizontal'
+                    MyCheckBox:
                         group: 'problem'
+                        size_hint_x: None
+                        active: True
                     Label:
                         text:'Classification'
+                        size_hint_x: None                    
+                        size: self.texture_size
                 BoxLayout:
+                    size_hint_y: None
+                    height:50
                     orientation: 'horizontal'
-                    CheckBox:
+                    MyCheckBox:
                         group: 'problem'
+                        size_hint_x: None
+                           
                     Label:
                         text:'Detection'
-
+                        size_hint_x: None
+                        size: self.texture_size   
                 Label:
-                    text: 'output format:'
+                    text: '   output format:'
+                    bold:'True'
+                    font_size: 25
+                    size_hint_x: None
+                    size: self.texture_size
+                    size_hint_y: None
+                    height:100
+                    padding:30,30  
 
                 BoxLayout:
+                    size_hint_y: None
+                    height:50
                     orientation: 'horizontal'
-                    CheckBox:
+                    MyCheckBox:
                         active: True
                         group: 'format'
+                        size_hint_x: None
                     Label:
-                        text:'png'
+                        text:'rgba'
+                        size_hint_x: None
+                        size: self.texture_size                       
 
                 BoxLayout:
+                    size_hint_y: None
+                    height:50
                     orientation: 'horizontal'
-                    CheckBox:
-                        active: True
+                    MyCheckBox:
+                        size_hint_x: None
                         group: 'format'
                     Label:
-                        text:'jpg'
-
-                BoxLayout:
-                    orientation: 'horizontal'
-                    CheckBox:
-                        active: True
-                        group: 'format'
-                    Label:
-                        text:'gif'
+                        size_hint_x: None
+                        size: self.texture_size                   
+                        text:'rgb'
+                         
                 Label:
-                    text: 'Reshape?'
+                    text: '   Reshape?'
+                    bold:'True'
+                    font_size: 25
+                    size_hint_x: None
+                    size: self.texture_size
+                    size_hint_y: None
+                    height:100
+                    padding:30,30  
                 BoxLayout:
+                    size_hint_y: None
+                    height:50
                     orientation: 'horizontal'
-                    CheckBox:
-                        group: 'reshape'   
+                    MyCheckBox:
+                        size_hint_x: None
+                        group: 'reshape'
+                        active: True
+                        id:reshapeYes
                     Label:
                         text:'No'
+                        size_hint_x: None
+                        size: self.texture_size                       
       
                 BoxLayout:
 
                     orientation: 'horizontal'
-                    CheckBox:
-                        group: 'reshape'       
+                    size_hint_y: None
+                    height:50
+
+                    MyCheckBox:
+                        size_hint_x: None
+                        group: 'reshape'
                     Label:
-                        text:'Yes'
+                        text:'Yes    '
+                        size_hint_x: None
+                        size: self.texture_size                       
 
                     TextInput:
                         text: 'x'
                         multiline: False
                         size_hint: None, None
-                        height: 50
-                        padding:10
+                        height: 40
+                        width: 60
+                        disabled: reshapeYes.active
 
                     Label: 
-                        text: 'x'
+                        text: '*'
+                        height: 40
+                        width: 30
+                        size_hint_x: None
+                        size_hint_y: None
+
                     TextInput:
                         text: 'y'
                         multiline: False
                         size_hint: None, None
-                        height: 50
-                        padding:10
+                        height: 40
+                        width:60
+                        disabled: reshapeYes.active
                 Label:
-                    text: 'Label output Format:'
+                    text: '   Label output Format:'
+                    size_hint_y: None
+                    height:100
+                    padding:30,30
+                    bold:'True'
+                    font_size: 25
+                    size_hint_x: None
+                    size: self.texture_size     
                 BoxLayout:
+                    size_hint_y: None
+                    height:50
                     orientation: 'horizontal'
+                    MyCheckBox:
+                        group: 'Label'
+                        size_hint_x: None
                     Label:
                         text:'hdf5'
-                    CheckBox:
-                        group: 'Label'                     
+                        size_hint_x: None
+                        size: self.texture_size  
+                BoxLayout:
+                    size_hint_y: None
+                    height:50
+                    orientation: 'horizontal'
+                    MyCheckBox:
+                        group: 'Label'
+                        size_hint_x: None
+                    Label:
+                        text:'txt'
+                        size_hint_x: None
+                        size: self.texture_size  
+                BoxLayout:
+                    size_hint_y: None
+                    height:50
+                    orientation: 'horizontal'
+                    MyCheckBox:
+                        group: 'Label'
+                        size_hint_x: None
+                    Label:
+                        text:'json'
+                        size_hint_x: None
+                        size: self.texture_size   
+                Widget:
+                    size_hint_y: None
+                    height: 150
+   
+                BoxLayout:
+                    orientation: 'horizontal'
+                    height: 50
+                    size_hint_y:None
+                    Widget
+
+                    Button:
+                        text: "Start new project"
+                        id: 'startNewProjectButton'
+                        padding: (20,20)
+                    Widget
+                        size_hint_x: None
+                        width: 50
+                    Button:
+                        text: 'Load existing project'
+                        id: 'loadExistingProjectButton'
+                        passing: (20,20)
+                    Widget
+                Widget

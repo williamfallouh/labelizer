@@ -9,6 +9,8 @@ from kivy.config import Config
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.label import Label
 from kivy.uix.button import Button
+from kivy.properties import AliasProperty, StringProperty, ListProperty, BooleanProperty
+
 
 import kivy
 
@@ -16,7 +18,7 @@ from subprocess import Popen, PIPE
 from kivy.uix.screenmanager import Screen
 
 
-
+#from myCheckBox import MyCheckBox
 
 
 # kivy.require('1.11.1')
@@ -26,16 +28,19 @@ Config.write()
 
 Window.maximize()
 
-def on_checkbox_active(checkbox, value):
-    if value:
-        print('The checkbox', checkbox, 'is active')
-    else:
-        print('The checkbox', checkbox, 'is inactive')
+class MyCheckBox(CheckBox):
+    allow_no_selection = BooleanProperty(False)
 
-checkbox = CheckBox()
+
+
+'''
+
 checkbox.bind(active=on_checkbox_active)
+'''
 
 
+root = Builder.load_file('main.kv')
+"""
 root = Builder.load_string(
 '''
 BoxLayout:
@@ -73,38 +78,7 @@ BoxLayout:
                         row_default_height: 100
                         col_force_default: True
                         col_default_width: 400
-                        BoxLayout:
-                            orientation: 'horizontal'
-                            CheckBox:
-                                group: 'class'
-                                size_hint_x: None
-                            Label:
-                                size_hint_x: None
-                                text:'Car'
-             
-                        BoxLayout:
-                            orientation: 'horizontal'
-                            CheckBox:
-                                group: 'class'
-                                size_hint_x: None
-                            Label:
-                                size_hint_x: None
-                                text:'Person'    
 
-                        BoxLayout:
-                            orientation: 'horizontal'
-                            CheckBox:
-                                group: 'class'
-                                size_hint_x: None
-                            Label:
-                                size_hint_x: None
-                                text:'Truck'
-                            Button:
-                                size : (50,50)
-                                pos_hint: {'x':.23, 'y':.23}
-                                size_hint:(None, None)
-                                background_normal: ''
-                                padding: (10,10)  
 
     Splitter:
         sizable_from: 'left'
@@ -249,7 +223,7 @@ BoxLayout:
                 size_hint_y: None
                 height:50
                 orientation: 'horizontal'
-                CheckBox:
+                MyCheckBox:
                     size_hint_x: None
                     group: 'reshape'
                     active: True
@@ -265,7 +239,7 @@ BoxLayout:
                 size_hint_y: None
                 height:50
 
-                CheckBox:
+                MyCheckBox:
                     size_hint_x: None
                     group: 'reshape'
                 Label:
@@ -342,15 +316,45 @@ BoxLayout:
 
 
 ''')
+
+"""
 '''
 class Root(Widget):
 	pass
 '''	
+
+class Draw(Widget):
+    def on_touch_down(self,touch):
+        with self.canvas:
+            touch.ud["line"]=Line(points=(touch.x,touch.y))
+    def on_touch_move(self,touch):
+        with self.canvas:
+            touch.ud["line"].points +=(touch.x,touch.y)
+    def on_touch_up(self,touch):
+        print("released mouse",touch)
+
+        
 class MainApp(App):
+    classNumber = 0
+
     def build(self):
 #        return Root()
+        classNumber = 0
         return root
-    def addClassCallback(instance):
+
+    def setInputPath(self):
+        self.inputPath = root.ids.inputPathTI.text
+        print("input path set to " + self.inputPath )
+
+    def setOutputPath(self):
+        self.outputPath = root.ids.outputPathTI.text
+        print("output path set to " + self.outputPath )
+
+    def setOutputPath(self):
+        self.outputPath = root.ids.outputPathTI.text
+        print("output path set to " + self.outputPath )
+
+    def addClassCallback(self):
 
         process = Popen(['python3', 'classAdd.py'],stdin = PIPE, stdout=PIPE, stderr=PIPE)
 
@@ -359,18 +363,20 @@ class MainApp(App):
         if output!=b"":
             output =(output).decode("utf-8").split(";")
             print(output)
-            name = output[0]
+            name = output[0] + "("+ str(self.classNumber)+")"
             color = get_color_from_hex(output[1])
             box = BoxLayout(orientation= 'horizontal')
             root.ids.classesGrid.add_widget(box)
             box.add_widget(CheckBox(group= 'class', size_hint_x = None))  
             box.add_widget(Label(text = name, size_hint_x = None))
-            box.add_widget(Button(size = (50,50), size_hint_x = None, size_hint_y = None,pos_hint = {'x':.23, 'y':.23}, background_normal= '',  background_color = color ))
-            #box.add_widget(Button(size = (40,40), size_hint_x = None, Color = color ))
+            box.add_widget(Button(size = (50,50), size_hint_x = None, size_hint_y = None, pos_hint = {'x':.23, 'y':.23}, background_normal= '',  background_color = color ))
+            self.classNumber+=1
 
+    
  
 
 
 if __name__ == '__main__':
     MainApp().run()
+
 
